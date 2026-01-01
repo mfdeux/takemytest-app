@@ -1,0 +1,25 @@
+# Start with a Node.js image
+FROM node:24
+
+# Install Bun
+RUN npm install -g bun
+
+# Set the working directory
+WORKDIR /app
+
+# Copy dependencies
+COPY package.json bun.lock ./
+
+# Install dependencies with Bun
+RUN bun install
+
+# Copy source code
+COPY . .
+
+# Build the app with Bun
+RUN bunx prisma generate
+
+ENV NODE_ENV=production
+
+# Run the app
+CMD ["bunx", "--bun", "graphile-worker", "--jobs", "5"]

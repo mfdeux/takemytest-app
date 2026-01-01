@@ -1,0 +1,40 @@
+version: "3"
+
+tasks:
+  server:
+    cmds:
+      - bun dev
+    silent: true
+  prisma:
+    cmds:
+      - bunx prisma generate
+      - bunx prisma db push
+    silent: true
+  server-docker:
+    cmds:
+      - docker compose -f ./docker/docker-compose.dev.yml run --service-ports app
+    silent: true
+  docker-up:
+    cmds:
+      - docker compose -f ./docker/docker-compose.dev.yml up
+    silent: true
+  docker-down:
+    cmds:
+      - docker compose -f ./docker/docker-compose.dev.yml down
+    silent: true
+  worker:
+    cmds:
+      - bunx --bun graphile-worker --jobs 5
+    silent: true
+  build:
+    cmds:
+      - docker build --platform linux/amd64 -f Dockerfile.server -t gcr.io/eintel-435822/takemytest-app:latest .
+    silent: true
+  push:
+    cmds:
+      - docker push gcr.io/eintel-435822/takemytest-app:latest
+    silent: true
+  deploy:
+    cmds:
+      - gcloud run deploy takemytest-app --allow-unauthenticated --region=us-east1 --image gcr.io/eintel-435822/takemytest-app:latest --platform managed
+    silent: true

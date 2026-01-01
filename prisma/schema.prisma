@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Account {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  telegramUserId       BigInt  @unique @map("telegram_user_id")
+  telegramFirstName    String? @map("telegram_first_name")
+  telegramLastName     String? @map("telegram_last_name")
+  telegramUsername     String? @map("telegram_username")
+  telegramLanguageCode String? @map("telegram_language_code")
+  telegramIsPremium    Boolean @map("telegram_is_premium")
+  defaultTone          String? @default("playful") @map("default_tone")
+
+  roles                   String[]     @default(["user"])
+  stripeCustomerId        String?      @unique @map("stripe_customer_id")
+  stripeSubscriptionId    String?      @map("stripe_subscription_id")
+  subscriptionPeriodBegin DateTime?    @map("subscription_period_begin")
+  subscriptionPeriodEnd   DateTime?    @map("subscription_period_end")
+  subscriptionStatus      String?      @map("subscription_status")
+  cancelAtPeriodEnd       Boolean      @default(false) @map("cancel_at_period_end")
+  messagesRemaining       Int          @default(0) @map("messages_remaining")
+  messagesTotal           Int          @default(0) @map("messages_total")
+  deletedAt               DateTime?    @map("deleted_at")
+  messages                Message[]
+  tokenUsages             TokenUsage[]
+
+  @@map("accounts")
+}
+
+model Message {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  telegramMessageId BigInt? @unique @map("telegram_message_id")
+  accountId         String  @map("account_id") @db.Uuid
+  role              String // user, ai
+  text              String?
+  type              String // text, image, video
+  action            String? @map("action")
+
+  telegramFileId String? @map("telegram_file_id")
+  replyToId      String? @map("reply_to_id") @db.Uuid
+  refinementOfId String? @map("refinement_of_id") @db.Uuid
+  refineType     String? @map("refine_type")
+
+  account      Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  replyTo      Message?  @relation("MessageReplies", fields: [replyToId], references: [id], onDelete: Cascade)
+  refinementOf Message?  @relation("MessageRefinements", fields: [refinementOfId], references: [id], onDelete: Cascade)
+  refinements  Message[] @relation("MessageRefinements")
+  replies      Message[] @relation("MessageReplies")
+
+  @@index([accountId], name: "idx_messages_account_id")
+  @@map("messages")
+}
+
+model TokenUsage {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  accountId    String @map("account_id") @db.Uuid
+  model        String
+  inputTokens  Int?   @map("input_tokens")
+  outputTokens Int?   @map("output_tokens")
+  totalTokens  Int?   @map("total_tokens")
+
+  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@map("token_usages")
+}
+
+model StripeWebhookEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  stripeEventId String @unique @map("stripe_event_id")
+  type          String
+  data          Json
+
+  @@map("stripe_webhook_events")
+}
