@@ -1,26 +1,26 @@
-import { Calendar, Heart, MessageSquare, Reply } from "lucide-react";
+import { BookOpen, Zap, GraduationCap, CheckCircle } from "lucide-react";
 
 const features = [
   {
-    icon: Heart,
-    title: "Pickup Lines",
+    icon: Zap,
+    title: "Instant Answers",
     description:
-      "Clever openers tailored to your style—playful, smooth, or bold.",
+      "Get accurate solutions to any test question in seconds.",
   },
   {
-    icon: MessageSquare,
-    title: "Conversation Starters",
-    description: "Break the ice with engaging topics that spark connection.",
+    icon: BookOpen,
+    title: "Step-by-Step Explanations",
+    description: "Understand the how and why behind every answer.",
   },
   {
-    icon: Reply,
-    title: "Reply Suggestions",
-    description: "Witty, thoughtful responses to keep conversations flowing.",
+    icon: GraduationCap,
+    title: "All Subjects Covered",
+    description: "Math, Science, History, Languages, and more.",
   },
   {
-    icon: Calendar,
-    title: "Date Ideas",
-    description: "Creative suggestions for memorable experiences together.",
+    icon: CheckCircle,
+    title: "Verified Solutions",
+    description: "AI-powered accuracy you can trust for better grades.",
   },
 ];
 
@@ -34,10 +34,10 @@ const Features = () => {
             Features
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Everything you need
+            Study smarter, not harder
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Four tools in one bot to elevate your conversations
+            Everything you need to ace your tests and understand the material
           </p>
         </div>
 

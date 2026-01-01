@@ -12,7 +12,7 @@ const Hero = ({ telegramLink }: HeroProps) => {
       <div className="absolute inset-0 grid-pattern opacity-40" />
 
       {/* Gradient orb */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-brand/20 via-purple-500/10 to-pink-500/10 blur-3xl" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-brand/20 via-blue-500/10 to-cyan-500/10 blur-3xl" />
 
       {/* Noise texture */}
       <div className="absolute inset-0 noise pointer-events-none" />
@@ -23,9 +23,9 @@ const Hero = ({ telegramLink }: HeroProps) => {
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 opacity-0 animate-fade-up"
           style={{ animationDelay: "0s" }}
         >
-          Your unfair
+          Ace every
           <br />
-          <span className="text-gradient">advantage.</span>
+          <span className="text-gradient">test.</span>
         </h1>
 
         {/* Subheadline */}
@@ -33,8 +33,7 @@ const Hero = ({ telegramLink }: HeroProps) => {
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed opacity-0 animate-fade-up"
           style={{ animationDelay: "0.1s" }}
         >
-          Upload any dating profile or conversation. Get pickup lines, replies,
-          and date ideas that actually work—instantly via Telegram.
+          Snap a photo of any test question. Get instant answers and detailed explanations—all through Telegram.
         </p>
 
         {/* CTA Buttons */}
@@ -68,18 +67,18 @@ const Hero = ({ telegramLink }: HeroProps) => {
           style={{ animationDelay: "0.3s" }}
         >
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold">10K+</div>
-            <div className="text-sm text-muted-foreground">Active Users</div>
+            <div className="text-3xl md:text-4xl font-bold">50K+</div>
+            <div className="text-sm text-muted-foreground">Questions Solved</div>
           </div>
           <div className="w-px h-10 bg-border hidden md:block" />
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold">500K+</div>
-            <div className="text-sm text-muted-foreground">Lines Generated</div>
+            <div className="text-3xl md:text-4xl font-bold">15K+</div>
+            <div className="text-sm text-muted-foreground">Active Students</div>
           </div>
           <div className="w-px h-10 bg-border hidden md:block" />
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold">4.9★</div>
-            <div className="text-sm text-muted-foreground">User Rating</div>
+            <div className="text-3xl md:text-4xl font-bold">98%</div>
+            <div className="text-sm text-muted-foreground">Accuracy Rate</div>
           </div>
         </div>
       </div>
