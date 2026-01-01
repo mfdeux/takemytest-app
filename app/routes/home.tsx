@@ -12,7 +12,7 @@ export function loader({ request }: Route.LoaderArgs) {
   return {};
 }
 
-const TELEGRAM_BOT_LINK = "https://getlinecraft.com/telegram/join";
+const TELEGRAM_BOT_LINK = "https://gettakemytest.com/telegram/join";
 
 export default function Page() {
   return (

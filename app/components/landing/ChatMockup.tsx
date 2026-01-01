@@ -1,33 +1,35 @@
 import { Image, Send } from "lucide-react";
-import profilePreview from "~/assets/profile-preview.jpg";
 
 const messages = [
   {
     type: "user",
     isImage: true,
-    imageLabel: "dating_profile.jpg",
-    caption: "Help me start a conversation with her!",
+    imageLabel: "math_question.jpg",
+    caption: "Need help with this calculus problem!",
+    imageContent: "Find the derivative of f(x) = 3x² + 2x - 5",
   },
   {
     type: "bot",
     content:
-      "She loves hiking and photography! Here are 3 personalized openers:",
+      "I'll help you solve this step by step:",
     suggestions: [
-      "\"I see you're into hiking—what's your favorite trail that's worth waking up at 5am for?\"",
-      '"Your photography is incredible! Do you prefer golden hour or that perfect overcast light?"',
-      '"Fellow outdoor enthusiast here 👋 What\'s on your hiking bucket list?"',
+      "Answer: f'(x) = 6x + 2",
+      "Step 1: Apply the power rule to each term",
+      "Step 2: The derivative of 3x² is 6x (bring down the exponent and reduce by 1)",
+      "Step 3: The derivative of 2x is 2 (constant times x)",
+      "Step 4: The derivative of -5 is 0 (constants disappear)",
     ],
   },
   {
     type: "user",
     content:
-      "She replied 'I love the Cascades! Haven't explored much though.' What should I say?",
+      "Can you explain why the constant disappears?",
   },
   {
     type: "bot",
-    content: "Perfect opening to suggest a date! Try:",
+    content: "Great question! Here's why:",
     suggestions: [
-      '"The Cascades are amazing! I know a trail with incredible views—want to explore it together sometime?"',
+      "Constants have a derivative of 0 because they don't change. The derivative measures rate of change, and since -5 is always -5 no matter what x is, its rate of change is zero.",
     ],
   },
 ];
@@ -45,10 +47,10 @@ const ChatMockup = () => {
             See It In Action
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Real conversations, real results
+            From question to answer in seconds
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Watch how Linecraft helps you navigate any dating scenario
+            Watch how TakeMyTest solves any problem with detailed explanations
           </p>
         </div>
 
@@ -63,7 +65,7 @@ const ChatMockup = () => {
             </div>
             <div className="flex-1 text-center">
               <span className="text-sm text-muted-foreground">
-                Linecraft Bot
+                TakeMyTest Bot
               </span>
             </div>
             <div className="w-12" />
@@ -86,13 +88,11 @@ const ChatMockup = () => {
                   {message.type === "user" ? (
                     message.isImage ? (
                       <div className="space-y-2">
-                        {/* Profile image preview */}
-                        <div className="relative w-48 h-64 rounded-lg overflow-hidden">
-                          <img
-                            src={profilePreview}
-                            alt="Dating profile"
-                            className="w-full h-full object-cover"
-                          />
+                        {/* Test question image preview */}
+                        <div className="relative rounded-lg overflow-hidden bg-white p-4">
+                          <div className="text-black font-mono text-sm">
+                            {message.imageContent}
+                          </div>
                           {/* Overlay with file info */}
                           <div className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm px-2 py-1.5">
                             <div className="flex items-center gap-1.5">

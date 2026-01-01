@@ -4,7 +4,7 @@ import { Link } from "react-router";
 export default function Page() {
   return (
     <>
-      <title>Privacy Policy - Linecraft</title>
+      <title>Privacy Policy - TakeMyTest</title>
       <div className="min-h-screen bg-background">
         <div className="max-w-3xl mx-auto px-4 py-16">
           <Link
@@ -33,7 +33,7 @@ export default function Page() {
               <h2 className="text-2xl font-semibold text-foreground">
                 1. Information We Collect
               </h2>
-              <p>When you use Linecraft, we may collect:</p>
+              <p>When you use TakeMyTest, we may collect:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Telegram user ID and username</li>
                 <li>Images and text you upload for analysis</li>

@@ -7,34 +7,34 @@ import {
 
 const faqs = [
   {
-    question: "How does Linecraft work?",
+    question: "How does TakeMyTest work?",
     answer:
-      "Linecraft uses advanced AI to generate personalized pickup lines, conversation starters, reply suggestions, and date ideas. Simply describe your situation to the bot, and it crafts the perfect response.",
+      "TakeMyTest uses advanced AI to analyze test questions from images you upload. Simply snap a photo of your question via Telegram, and our AI provides accurate answers with detailed explanations.",
+  },
+  {
+    question: "What subjects does it support?",
+    answer:
+      "We support all major subjects including Math, Science, History, Languages, Social Studies, and more. From basic arithmetic to advanced calculus, we've got you covered.",
   },
   {
     question: "Is my data private?",
     answer:
-      "Absolutely. We don't store your conversations or personal data. Your interactions are processed in real-time and not saved.",
+      "Yes. We process questions in real-time and don't store your images or answers permanently. Your academic integrity and privacy are our top priorities.",
   },
   {
     question: "Can I cancel anytime?",
     answer:
-      "Yes. There are no contracts. Cancel your Premium subscription anytime and keep access until the end of your billing period.",
+      "Absolutely. There are no contracts. Cancel your Premium subscription anytime and keep access until the end of your billing period.",
   },
   {
-    question: "What makes this different from ChatGPT?",
+    question: "How accurate are the answers?",
     answer:
-      "Linecraft is purpose-built for dating and social conversations. It understands context, tone, and timing in ways general AI doesn't—plus it's right in Telegram.",
-  },
-  {
-    question: "Do the pickup lines work?",
-    answer:
-      "Our AI generates clever, contextual lines—not cheesy scripts. The key is authenticity: use them as inspiration and adapt to your personality.",
+      "Our AI maintains a 98% accuracy rate across all subjects. We provide step-by-step explanations so you can verify the logic and learn from each solution.",
   },
   {
     question: "How do I upgrade?",
     answer:
-      "Start a chat with Linecraft on Telegram and use the /upgrade command. You'll be guided through a quick, secure payment process.",
+      "Start a chat with TakeMyTest on Telegram and use the /upgrade command. You'll be guided through a quick, secure payment process.",
   },
 ];
 

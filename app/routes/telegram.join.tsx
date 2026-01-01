@@ -4,7 +4,7 @@ import type { Route } from "./+types/telegram.join";
 
 export async function loader({ request }: Route.LoaderArgs) {
   await trackPageview({ request });
-  return redirect(`https://t.me/LinecraftX_Bot`);
+  return redirect(`https://t.me/TakeMyTest_Bot`);
 }
 
 export default function Page() {

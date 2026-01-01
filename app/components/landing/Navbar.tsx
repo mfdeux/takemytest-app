@@ -24,7 +24,7 @@ const Navbar = ({ telegramLink }: NavbarProps) => {
           <a href="#" className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-md gradient-brand" />
             <span className="text-lg font-semibold tracking-tight">
-              Linecraft
+              TakeMyTest
             </span>
           </a>
 

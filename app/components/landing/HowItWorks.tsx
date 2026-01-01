@@ -1,21 +1,21 @@
 const steps = [
   {
     step: "01",
-    title: "Start a Chat",
+    title: "Open Telegram",
     description:
-      "Open Telegram and message the Linecraft bot. No signup needed.",
+      "Message the TakeMyTest bot. No signup required, start instantly.",
   },
   {
     step: "02",
-    title: "Drop a Screenshot",
+    title: "Snap Your Question",
     description:
-      "Upload a photo, dating profile, or conversation—we'll take it from there.",
+      "Take a photo of any test question—math, science, history, or any subject.",
   },
   {
     step: "03",
-    title: "Get Instant Results",
+    title: "Get Your Answer",
     description:
-      "Receive personalized suggestions in seconds. Use as-is or customize.",
+      "Receive accurate answers with step-by-step explanations in seconds.",
   },
 ];
 
@@ -35,7 +35,7 @@ const HowItWorks = () => {
             Three simple steps
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            From chat to perfect words in seconds
+            From confused to confident in seconds
           </p>
         </div>
 

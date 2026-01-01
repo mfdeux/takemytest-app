@@ -17,12 +17,12 @@ const Footer = ({ telegramLink }: FooterProps) => {
 
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Ready to upgrade your
+            Ready to ace your
             <br />
-            <span className="text-gradient">conversations?</span>
+            <span className="text-gradient">next test?</span>
           </h2>
           <p className="text-muted-foreground mb-8 text-lg">
-            Join thousands who never run out of things to say.
+            Join thousands of students who study smarter with AI.
           </p>
           <a href={telegramLink} target="_blank" rel="noopener noreferrer">
             <Button
@@ -44,7 +44,7 @@ const Footer = ({ telegramLink }: FooterProps) => {
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 rounded-md gradient-brand" />
               <span className="text-lg font-semibold tracking-tight">
-                Linecraft
+                TakeMyTest
               </span>
             </div>
 
@@ -66,7 +66,7 @@ const Footer = ({ telegramLink }: FooterProps) => {
 
             {/* Copyright */}
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Linecraft
+              © {new Date().getFullYear()} TakeMyTest
             </p>
           </div>
         </div>

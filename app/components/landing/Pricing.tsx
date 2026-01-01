@@ -10,26 +10,26 @@ const plans = [
     name: "Free",
     price: "$0",
     period: "",
-    description: "Try Linecraft risk-free",
+    description: "Try TakeMyTest risk-free",
     features: [
-      "20 messages per month",
-      "All 4 conversation tools",
-      "Instant AI responses",
+      "20 questions per month",
+      "All subjects covered",
+      "Instant AI answers",
     ],
     cta: "Get Started",
     highlighted: false,
   },
   {
     name: "Premium",
-    price: "$4.99",
+    price: "$9.99",
     period: "/month",
-    description: "For the confident conversationalist",
+    description: "For serious students",
     features: [
-      "Unlimited messages",
-      "All 4 conversation tools",
-      "Priority AI responses",
-      "Advanced personalization",
-      "Exclusive styles",
+      "Unlimited questions",
+      "All subjects covered",
+      "Step-by-step explanations",
+      "Priority support",
+      "Detailed breakdowns",
       "Cancel anytime",
     ],
     cta: "Go Premium",
@@ -47,10 +47,10 @@ const Pricing = ({ telegramLink }: PricingProps) => {
             Pricing
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Simple pricing
+            Affordable for students
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Start free, upgrade when you're ready
+            Start free, upgrade when you need more help
           </p>
         </div>
 
@@ -61,7 +61,7 @@ const Pricing = ({ telegramLink }: PricingProps) => {
               key={plan.name}
               className={`relative p-8 rounded-2xl border transition-all duration-300 ${
                 plan.highlighted
-                  ? "bg-card border-brand/50 shadow-[0_0_60px_-12px_hsl(262_83%_58%_/_0.3)]"
+                  ? "bg-card border-brand/50 shadow-[0_0_60px_-12px_hsl(217_91%_60%_/_0.3)]"
                   : "bg-card border-border hover:border-muted-foreground/30"
               }`}
             >

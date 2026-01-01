@@ -20,49 +20,49 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>Linecraft - Your Unfair Advantage in Dating</title>
+        <title>TakeMyTest - Ace Every Test with AI</title>
         <meta
           name="description"
-          content="Upload any dating profile or conversation. Get pickup lines, replies, and date ideas that actually work—instantly via Telegram."
+          content="Snap a photo of any test question. Get instant answers and detailed explanations—all through Telegram. Study smarter, not harder."
         />
-        <meta name="author" content="Linecraft" />
+        <meta name="author" content="TakeMyTest" />
         <meta
           name="keywords"
-          content="dating assistant, pickup lines, conversation starters, dating app help, Telegram bot, AI dating coach"
+          content="test helper, homework help, study assistant, AI tutor, test answers, Telegram bot, academic help, student assistant"
         />
-        <link rel="canonical" href="https://linecraft.app/" />
+        <link rel="canonical" href="https://takemytest.app/" />
 
         <meta
           property="og:title"
-          content="Linecraft - Your Unfair Advantage in Dating"
+          content="TakeMyTest - Ace Every Test with AI"
         />
         <meta
           property="og:description"
-          content="Upload any dating profile or conversation. Get pickup lines, replies, and date ideas that actually work—instantly via Telegram."
+          content="Snap a photo of any test question. Get instant answers and detailed explanations—all through Telegram. Study smarter, not harder."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://linecraft.app/" />
+        <meta property="og:url" content="https://takemytest.app/" />
         <meta
           property="og:image"
-          content="https://linecraft.app/og-image.png"
+          content="https://takemytest.app/og-image.png"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:site_name" content="Linecraft" />
+        <meta property="og:site_name" content="TakeMyTest" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@Linecraft" />
+        <meta name="twitter:site" content="@TakeMyTest" />
         <meta
           name="twitter:title"
-          content="Linecraft - Your Unfair Advantage in Dating"
+          content="TakeMyTest - Ace Every Test with AI"
         />
         <meta
           name="twitter:description"
-          content="Upload any dating profile or conversation. Get pickup lines, replies, and date ideas that actually work—instantly via Telegram."
+          content="Snap a photo of any test question. Get instant answers and detailed explanations—all through Telegram. Study smarter, not harder."
         />
         <meta
           name="twitter:image"
-          content="https://linecraft.app/og-image.png"
+          content="https://takemytest.app/og-image.png"
         />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -77,7 +77,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         ></link>
         <script
           defer
-          data-domain="getlinecraft.com"
+          data-domain="gettakemytest.com"
           data-api="https://intake.massive.sh/api/event"
           src="https://intake.massive.sh/js/script.js"
         />
@@ -87,10 +87,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              name: "Linecraft",
-              url: "https://getlinecraft.com",
+              name: "TakeMyTest",
+              url: "https://gettakemytest.com",
               description:
-                "Upload any dating profile or conversation. Get pickup lines, replies, and date ideas that actually work—instantly via Telegram.",
+                "Snap a photo of any test question. Get instant answers and detailed explanations—all through Telegram. Study smarter, not harder.",
             }),
           }}
         />
