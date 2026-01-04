@@ -1,14 +1,10 @@
-Finish up reply menu / fine tune of the features
-Include tone in replies
-Only one reply per message (instead of 4)
-Stripe [x]
-Launch on google [x] / coolify [x]
-Use webhook instead of script [x]
-Cloudflare [x]
-Plausible Analytics [x]
-Variable links (point to localhost vs getlinecraft) [x]
-Usage tracking [x] / limits [x]
-Settings [x] / payment [x]
-Orpc [x]
+Stress test / refine AI prompt
+Telegram message ID [x]
+Make answer quicker - just have answer and explanation [x]
+Chat with answer [replyHandler]
+Send text instead of image [replyHandler] [x]
+Stripe
+Deploy live (google/coolify)
+Plausible analytics
 
 F&F Coupon : FANDF123457890

@@ -1,7 +1,7 @@
 // worker/tasks/process_image.ts
 import { Bot } from "grammy";
 import { type Task } from "graphile-worker";
-import { analyzeTestQuestionImage_Quick } from "~/lib/services/ai.server";
+import { analyzeTestQuestionText } from "~/lib/services/ai.server";
 import { escapeCaption, getBot } from "~/lib/services/telegram.server";
 import prisma from "~/lib/utils/prisma.server";
 
@@ -9,7 +9,6 @@ interface TaskPayload {
   chatId: number;
   replyToMessageId: number;
   statusMessageId?: number;
-  fileId: string;
 }
 
 export async function withChatAction<T>(
@@ -48,7 +47,6 @@ const task: Task = async (payload, helpers) => {
     where: { telegramMessageId },
     include: { account: true },
   });
-
   if (originalMessage) {
     helpers.logger.info(
       `Processing image task for account ${originalMessage.accountId}, message ${originalMessage.id}`
@@ -61,29 +59,9 @@ const task: Task = async (payload, helpers) => {
 
   await withChatAction(bot, data.chatId, "typing", async () => {
     try {
-      const file = await bot.api.getFile(data.fileId);
-      const fileUrl = `https://api.telegram.org/file/bot${process.env.TELEGRAM_BOT_TOKEN}/${file.file_path}`;
-
-      const res = await fetch(fileUrl);
-      if (!res.ok) {
-        throw new Error(
-          `Failed to fetch file from Telegram: ${res.status} ${res.statusText}`
-        );
-      }
-      const arrayBuffer = await res.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      const base64Data = buffer.toString("base64");
-      const base64Image = `data:image/jpeg;base64,${base64Data}`;
-
-      helpers.logger.debug(
-        `Downloaded image and converted to base64 (length=${base64Data.length})`
-      );
-
-      helpers.logger.info(
-        `Processing image for chat ${data.chatId} from file URL: ${fileUrl}`
-      );
-      const { output: analysis, usage } = await analyzeTestQuestionImage_Quick({
-        imageUrl: base64Image,
+      helpers.logger.info(`Processing text for chat ${data.chatId}`);
+      const { output: analysis, usage } = await analyzeTestQuestionText({
+        text: originalMessage?.text || "",
       });
 
       helpers.logger.info(
@@ -93,7 +71,7 @@ const task: Task = async (payload, helpers) => {
       if (analysis.classification === "not_a_question") {
         const message = await bot.api.sendMessage(
           data.chatId,
-          "❗️ The image does not appear to contain a valid test question\\. Please try again with a different image\\.",
+          "❗️ The text does not appear to contain a valid test question\\. Please try again with different text\\.",
           {
             reply_to_message_id: data.replyToMessageId,
             parse_mode: "MarkdownV2",

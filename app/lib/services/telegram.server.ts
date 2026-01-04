@@ -1,7 +1,15 @@
 import prisma from "../utils/prisma.server";
 
+import { addDays } from "date-fns";
 import type { Account } from "generated/prisma/client";
-import { Bot, Context, type NextFunction } from "grammy";
+import { Bot, Composer, Context, type NextFunction } from "grammy";
+import graphileWorker from "../utils/graphile.server";
+import logger from "../utils/logger.server";
+import {
+  generateAccountOneTimeToken,
+  getOrCreateAccount,
+} from "./accounts.server";
+import { cancelAccountSubscription } from "./billing.server";
 
 // Define the shape of your custom data
 interface CustomSession {
@@ -12,16 +20,6 @@ interface CustomSession {
 export type MyContext = Context & {
   session: CustomSession;
 };
-
-import { addDays } from "date-fns";
-import { Composer, InlineKeyboard } from "grammy";
-import graphileWorker from "../utils/graphile.server";
-import logger from "../utils/logger.server";
-import {
-  generateAccountOneTimeToken,
-  getOrCreateAccount,
-} from "./accounts.server";
-import { cancelAccountSubscription } from "./billing.server";
 
 async function subscriptionCheck(ctx: Context, next: NextFunction) {
   const telegramUserId = ctx.from?.id;
@@ -97,13 +95,13 @@ export async function getBot() {
       telegramIsPremium: ctx.from!.is_premium || false,
     });
     logger.info(`Account created or retrieved: ${JSON.stringify(account.id)}`);
-    return ctx.reply("Welcome to LinecraftX! 🚀");
+    return ctx.reply("Welcome to TakeMyTest! 🚀");
   });
 
   bot.command("terms", (ctx) => {
     logger.info(`Received /terms from ${ctx.from?.id}`);
     return ctx.reply(
-      `Visit [Terms of Service](${process.env.BASE_SERVER_URL}/legal/terms) for assistance.`,
+      `Visit [Terms of Service](${process.env.BASE_SERVER_URL}/legal/terms) for assistance\\.`,
       { parse_mode: "MarkdownV2" }
     );
   });
@@ -111,7 +109,15 @@ export async function getBot() {
   bot.command("privacy", (ctx) => {
     logger.info(`Received /privacy from ${ctx.from?.id}`);
     return ctx.reply(
-      `Visit [Privacy Policy](${process.env.BASE_SERVER_URL}/legal/privacy) for assistance.`,
+      `Visit [Privacy Policy](${process.env.BASE_SERVER_URL}/legal/privacy) for assistance\\.`,
+      { parse_mode: "MarkdownV2" }
+    );
+  });
+
+  bot.command("support", (ctx) => {
+    logger.info(`Received /support from ${ctx.from?.id}`);
+    return ctx.reply(
+      `For support, message our founder Marc [here](https://t.me/mfdeux)\\.`,
       { parse_mode: "MarkdownV2" }
     );
   });
@@ -185,27 +191,19 @@ export async function getBot() {
     const photos = ctx.message.photo;
     if (photos.length === 0) return;
 
-    // guard against not having requests
-    // guard against too much usage
-
-    const keyboard = new InlineKeyboard()
-      .text("🧐 Pickup Lines", "act_pickup_lines")
-      .row()
-      .text("⬆️ Convo Starters", "act_convo_starters")
-      .row()
-      .text("⬆️ Convo Replies", "act_convo_replies")
-      .row()
-      .text("⬇️ Date Ideas", "act_date_ideas");
-
     const account = await prisma.account.findUnique({
       where: { telegramUserId: ctx.from!.id },
     });
 
     const fileId = ctx.message.photo.pop()!.file_id;
 
+    const telegramMessageId = `${ctx.chat?.id}_${ctx.message.message_id}`;
+
     await prisma.message.create({
       data: {
-        telegramMessageId: BigInt(ctx.message.message_id),
+        telegramMessageId,
+        telegramChatId: String(ctx.chat?.id),
+        telegramChatMessageId: String(ctx.message.message_id),
         type: "photo",
         accountId: account!.id,
         role: "user",
@@ -213,42 +211,13 @@ export async function getBot() {
       },
     });
 
-    // Reply to the photo with the options
-    await ctx.reply("Image received. What action would you like to perform?", {
-      reply_markup: keyboard,
-      reply_parameters: { message_id: ctx.message.message_id }, // Link reply to photo
-    });
-  });
-
-  const callbackHandler = new Composer();
-  callbackHandler.use(subscriptionCheck);
-
-  // Listen for any callback data starting with "act_"
-  callbackHandler.callbackQuery(/^act_(.+)$/, async (ctx) => {
-    const actionStr = ctx.match[1]; // e.g., "describe", "scale_up"
-
-    // 1. UX: Immediately acknowledge the click (stops button flashing)
-    await ctx.answerCallbackQuery({
-      text: `Processing: ${actionStr.replace("_", " ")}...`,
-    });
-
-    const botMessage = ctx.callbackQuery.message;
-    const originalPhotoMessage = botMessage?.reply_to_message;
-
-    // Safety check: Did the user delete the photo message in the meantime?
-    if (!originalPhotoMessage || !originalPhotoMessage.photo) {
-      await ctx.editMessageText(
-        "⚠️ Cannot find original image. Please try again."
-      );
-      return;
-    }
-
-    const fileId = originalPhotoMessage.photo.pop()!.file_id;
-
-    // 3. UX: Remove the buttons so they can't click twice
-    // We edit the prompt message to show status
-    const statusMsg = await ctx.editMessageText(
-      `⚙️ Working on: ${actionStr}...`
+    const statusMsg = await bot.api.sendMessage(
+      ctx.chat?.id,
+      "Working on it\\.\\.\\.",
+      {
+        reply_to_message_id: ctx.message.message_id,
+        parse_mode: "MarkdownV2",
+      }
     );
 
     // 4. QUEUE THE JOB
@@ -257,11 +226,10 @@ export async function getBot() {
       "analyzeImage", // Using a generic name for the task
       {
         chatId: ctx.chat?.id,
-        replyToMessageId: originalPhotoMessage.message_id,
+        replyToMessageId: ctx.message.message_id,
         // @ts-ignore
         statusMessageId: statusMsg.message_id,
         fileId: fileId,
-        action: actionStr, // <--- The new piece of data
       }
     );
   });
@@ -276,10 +244,12 @@ export async function getBot() {
     const botMessage = ctx.callbackQuery.message;
     if (!botMessage) return;
 
+    const telegramMessageId = `${ctx.chat?.id}_${botMessage.message_id}`;
+
     // 2. Find the context for THIS specific message
     const originalMessage = await prisma.message.findUnique({
       where: {
-        telegramMessageId: BigInt(botMessage.message_id),
+        telegramMessageId,
       },
     });
 
@@ -303,93 +273,59 @@ export async function getBot() {
     });
   });
 
-  // const replyHandler = new Composer();
+  const replyHandler = new Composer();
+  replyHandler.use(subscriptionCheck);
 
-  // replyHandler.on("message:text", async (ctx, next) => {
-  //   const reply = ctx.message.reply_to_message;
-  //   if (!reply) return next();
+  replyHandler.on("message:text", async (ctx, next) => {
+    const reply = ctx.message.reply_to_message;
+    if (reply) return next();
 
-  //   const botId = ctx.me.id;
-  //   if (reply.from?.id !== botId) return next();
+    const account = await prisma.account.findUnique({
+      where: { telegramUserId: ctx.from!.id },
+    });
 
-  //   const originalMessage = await prisma.message.findUnique({
-  //     where: {
-  //       telegramMessageId: BigInt(reply.message_id),
-  //     },
-  //   });
+    const telegramMessageId = `${ctx.chat?.id}_${ctx.message.message_id}`;
 
-  //   if (!originalMessage || !originalMessage.telegramFileId) {
-  //     return ctx.reply(
-  //       "I've lost the context for this image. Please upload it again."
-  //     );
-  //   }
+    await prisma.message.create({
+      data: {
+        telegramMessageId,
+        telegramChatId: String(ctx.chat?.id),
+        telegramChatMessageId: String(ctx.message.message_id),
+        type: "text",
+        text: ctx.message.text,
+        accountId: account!.id,
+        role: "user",
+      },
+    });
 
-  //   // if image, then pass in; if text, then pass in text and image
+    const statusMsg = await bot.api.sendMessage(
+      ctx.chat?.id,
+      "Working on it\\.\\.\\.",
+      {
+        reply_to_message_id: ctx.message.message_id,
+        parse_mode: "MarkdownV2",
+      }
+    );
 
-  //   await graphileWorker.addJob(
-  //     "processFollowUp", // Using a generic name for the task
-  //     {
-  //       chatId: ctx.chat.id,
-  //       replyToMessageId: ctx.message.message_id,
-  //       fileId: originalMessage.telegramFileId,
-  //       previousMessageId: originalMessage.id,
-  //       userQuestion: ctx.message.text,
-  //     }
-  //   );
-  // });
+    await graphileWorker.addJob(
+      "analyzeText", // Using a generic name for the task
+      {
+        chatId: ctx.chat?.id,
+        replyToMessageId: ctx.message.message_id,
+        // @ts-ignore
+        statusMessageId: statusMsg.message_id,
+      }
+    );
+  });
 
   bot.use(refinementHandler);
   bot.use(photoHandler);
-  bot.use(callbackHandler);
+  bot.use(replyHandler);
 
-  // --- Command: /remove <username> ---
-  // bot.command("remove", async (ctx) => {
-  //   const username = ctx.match.trim().toLowerCase();
-
-  //   if (!username) {
-  //     return ctx.reply("⚠️ Usage: /remove <instagram_username>");
-  //   }
-
-  //   const result = await prisma.profileAssociation.deleteMany({
-  //     where: {
-  //       accountId: ctx.session.account.id,
-  //       profile: { username },
-  //     },
-  //   });
-
-  //   if (result.count === 0) {
-  //     return ctx.reply(`⚠️ You aren't tracking **${username}**.`, {
-  //       parse_mode: "Markdown",
-  //     });
-  //   }
-
-  //   return ctx.reply(`🗑️ Stopped tracking **${username}**.`, {
-  //     parse_mode: "Markdown",
-  //   });
-  // });
-
-  // // --- Command: /list ---
-  // bot.command("list", async (ctx) => {
-  //   const accounts = await prisma.profileAssociation.findMany({
-  //     where: { accountId: ctx.session.account.id },
-  //     orderBy: { profile: { username: "asc" } },
-  //     include: { profile: true },
-  //   });
-
-  //   if (accounts.length === 0) {
-  //     return ctx.reply("You are not tracking anyone yet. Use /add to start.");
-  //   }
-
-  //   const list = accounts.map((a) => `• ${a.profile.username}`).join("\n");
-  //   return ctx.reply(`📋 **Your Tracked Accounts:**\n\n${list}`, {
-  //     parse_mode: "Markdown",
-  //   });
-  // });
   return bot;
 }
 
 export function escapeCaption(caption: string) {
-  // Escape characters as per Telegram MarkdownV2 requirements
   return caption
     .replace(/_/g, "\\_")
     .replace(/\*/g, "\\*")
@@ -409,40 +345,4 @@ export function escapeCaption(caption: string) {
     .replace(/}/g, "\\}")
     .replace(/\./g, "\\.")
     .replace(/!/g, "\\!");
-}
-
-export async function sendMessageToTelegram(
-  accountId: string,
-  chatId: string,
-  mediaType: "image" | "video",
-  mediaUrl: string,
-  caption?: string
-) {
-  const user = await prisma.account.findUnique({ where: { id: accountId } });
-
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const method = mediaType === "video" ? "sendVideo" : "sendPhoto";
-  const mediaKey = mediaType === "video" ? "video" : "photo";
-
-  const url = `https://api.telegram.org/bot${token}/${method}`;
-
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        [mediaKey]: mediaUrl,
-        caption: escapeCaption(caption || "Here is your saved story!"),
-        parse_mode: "MarkdownV2",
-      }),
-    });
-
-    if (!response.ok) {
-      const err = await response.text();
-      console.error(`Telegram ${method} Error:`, err);
-    }
-  } catch (error) {
-    console.error("Failed to send telegram message", error);
-  }
 }

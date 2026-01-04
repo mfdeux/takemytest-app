@@ -9,12 +9,14 @@ import Pricing from "~/components/landing/Pricing";
 import type { Route } from "./+types/home";
 
 export function loader({ request }: Route.LoaderArgs) {
-  return {};
+  const telegramBotLink = `${process.env.BASE_SERVER_URL}/telegram/join`;
+  return { telegramBotLink };
 }
 
-const TELEGRAM_BOT_LINK = "https://gettakemytest.com/telegram/join";
-
-export default function Page() {
+export default function Page({
+  loaderData: { telegramBotLink },
+}: Route.ComponentProps) {
+  const TELEGRAM_BOT_LINK = telegramBotLink;
   return (
     <main className="min-h-screen bg-background">
       <Navbar telegramLink={TELEGRAM_BOT_LINK} />

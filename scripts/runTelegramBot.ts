@@ -15,16 +15,19 @@ async function main() {
     { command: "subscription", description: "Manage subscription" },
     { command: "settings", description: "Manage account settings" },
     { command: "usage", description: "View usage statistics" },
+    { command: "support", description: "Get support" },
     { command: "terms", description: "Terms of Service" },
     { command: "privacy", description: "Privacy Policy" },
   ]);
 
-  await bot.api.setWebhook(
-    "https://linecraft-app-1068298120401.us-east1.run.app/api/telegram/webhook",
-    {
-      drop_pending_updates: true,
-    }
-  );
+  // await bot.api.setWebhook(
+  //   "https://takemytest.massive.sh/api/telegram/webhook",
+  //   {
+  //     drop_pending_updates: true,
+  //   }
+  // );
+  await bot.api.deleteWebhook();
+  await bot.start();
   console.log("Bot setup completed.");
 }
 

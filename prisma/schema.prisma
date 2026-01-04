@@ -47,17 +47,22 @@ model Message {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
-  telegramMessageId BigInt? @unique @map("telegram_message_id")
-  accountId         String  @map("account_id") @db.Uuid
-  role              String // user, ai
-  text              String?
-  type              String // text, image, video
-  action            String? @map("action")
+  telegramMessageId     String? @unique @map("telegram_message_id")
+  telegramChatMessageId String? @map("telegram_chat_message_id")
+  telegramChatId        String? @map("telegram_chat_id")
+  accountId             String  @map("account_id") @db.Uuid
+  role                  String // user, ai
+  text                  String?
+  type                  String // text, image, video
+  action                String? @map("action")
 
   telegramFileId String? @map("telegram_file_id")
   replyToId      String? @map("reply_to_id") @db.Uuid
   refinementOfId String? @map("refinement_of_id") @db.Uuid
   refineType     String? @map("refine_type")
+
+  aiModel    String? @map("ai_model")
+  aiAnalysis Json?   @map("ai_analysis")
 
   account      Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
   replyTo      Message?  @relation("MessageReplies", fields: [replyToId], references: [id], onDelete: Cascade)

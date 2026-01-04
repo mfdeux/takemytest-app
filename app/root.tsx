@@ -21,6 +21,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <title>TakeMyTest - Ace Every Test with AI</title>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta
           name="description"
           content="Snap a photo of any test question. Get instant answers and detailed explanations—all through Telegram. Study smarter, not harder."
