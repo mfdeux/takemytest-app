@@ -95,7 +95,9 @@ export async function getBot() {
       telegramIsPremium: ctx.from!.is_premium || false,
     });
     logger.info(`Account created or retrieved: ${JSON.stringify(account.id)}`);
-    return ctx.reply("Welcome to TakeMyTest! 🚀");
+    return ctx.reply(
+      "Welcome to TakeMyTest! Just type/send an image of a test question to get started. 🚀"
+    );
   });
 
   bot.command("terms", (ctx) => {
