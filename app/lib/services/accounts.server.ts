@@ -127,8 +127,8 @@ export async function getOrCreateAccount({
         telegramUsername,
         telegramLanguageCode,
         telegramIsPremium,
-        messagesRemaining: 100,
-        messagesTotal: 100,
+        messagesRemaining: 50,
+        messagesTotal: 50,
       },
     });
     const customer = await stripe.customers.create({
