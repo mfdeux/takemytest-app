@@ -1,10 +1,15 @@
 Stress test / refine AI prompt
+Chat with answer [replyHandler]
+
+Stripe [x]
+
 Telegram message ID [x]
 Make answer quicker - just have answer and explanation [x]
-Chat with answer [replyHandler]
+
 Send text instead of image [replyHandler] [x]
-Stripe
-Deploy live (google/coolify)
-Plausible analytics
+Buy domain [x]
+
+Deploy live (google/coolify) [x]
+Plausible analytics [x]
 
 F&F Coupon : FANDF123457890

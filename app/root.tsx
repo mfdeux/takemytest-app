@@ -78,7 +78,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         ></link>
         <script
           defer
-          data-domain="gettakemytest.com"
+          data-domain="takemytest.app"
           data-api="https://intake.massive.sh/api/event"
           src="https://intake.massive.sh/js/script.js"
         />
