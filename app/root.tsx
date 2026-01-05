@@ -45,7 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta property="og:url" content="https://takemytest.app/" />
         <meta
           property="og:image"
-          content="https://takemytest.app/og-image.png"
+          content="https://takemytest.app/og-image.jpg"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -63,7 +63,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         />
         <meta
           name="twitter:image"
-          content="https://takemytest.app/og-image.png"
+          content="https://takemytest.app/og-image.jpg"
         />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />

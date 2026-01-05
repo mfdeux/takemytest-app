@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { ArrowLeft, CreditCard, MessageSquare, User } from "lucide-react";
+import { ArrowLeft, CreditCard, User } from "lucide-react";
 import { Link, redirect, useRevalidator } from "react-router";
 import { toast } from "sonner";
 import { Badge } from "~/components/ui/badge";
@@ -12,8 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Label } from "~/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Separator } from "~/components/ui/separator";
 import { orpc } from "~/lib/orpc/orpc";
 import {
@@ -63,45 +61,11 @@ export default function Page({
   );
   const deleteMutation = useMutation(orpc.deleteAccount.mutationOptions());
 
-  async function handleToneChange(value: string) {
-    await updateMutation.mutateAsync({ defaultTone: value as any });
-    toast.success("Default tone updated");
-    revalidator.revalidate();
-  }
-
   async function handleDeleteAccount() {
     await deleteMutation.mutateAsync({});
     toast.success("Account deleted");
     window.location.href = "/";
   }
-
-  const toneOptions = [
-    {
-      value: "playful",
-      label: "Playful",
-      description: "Fun, flirty, and lighthearted",
-    },
-    {
-      value: "romantic",
-      label: "Romantic",
-      description: "Sweet, sincere, and heartfelt",
-    },
-    {
-      value: "confident",
-      label: "Confident",
-      description: "Self-assured and assertive, but respectful",
-    },
-    {
-      value: "forward",
-      label: "Forward",
-      description: "Daring, provocative, and unapologetically bold",
-    },
-    {
-      value: "unhinged",
-      label: "Unhinged",
-      description: "Outrageous, eccentric, and wildly unpredictable",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -176,47 +140,6 @@ export default function Page({
                   Upgrade to Premium
                 </Button>
               )}
-            </CardContent>
-          </Card>
-
-          {/* Response Tone */}
-          <Card className="border-border bg-card">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-muted-foreground" />
-                <CardTitle className="text-lg">Response Tone</CardTitle>
-              </div>
-              <CardDescription>
-                Set the default tone for generated responses
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <RadioGroup
-                defaultValue={account.defaultTone as string}
-                onValueChange={handleToneChange}
-                className="space-y-3"
-              >
-                {toneOptions.map((tone) => (
-                  <div key={tone.value} className="flex items-start space-x-3">
-                    <RadioGroupItem
-                      value={tone.value}
-                      id={tone.value}
-                      className="mt-1"
-                    />
-                    <Label
-                      htmlFor={tone.value}
-                      className="flex flex-col gap-0.5 cursor-pointer"
-                    >
-                      <span className="font-medium text-left">
-                        {tone.label}
-                      </span>
-                      <span className="text-sm text-muted-foreground font-normal">
-                        {tone.description}
-                      </span>
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
             </CardContent>
           </Card>
 
