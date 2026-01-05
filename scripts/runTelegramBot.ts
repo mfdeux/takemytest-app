@@ -20,11 +20,11 @@ async function main() {
     { command: "privacy", description: "Privacy Policy" },
   ]);
 
-  // await bot.api.setWebhook("https://takemytest.app/api/telegram/webhook", {
-  //   drop_pending_updates: true,
-  // });
-  await bot.api.deleteWebhook();
-  await bot.start();
+  await bot.api.setWebhook("https://takemytest.app/api/telegram/webhook", {
+    drop_pending_updates: true,
+  });
+  // await bot.api.deleteWebhook();
+  // await bot.start();
   console.log("Bot setup completed.");
 }
 

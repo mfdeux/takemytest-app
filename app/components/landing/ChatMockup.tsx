@@ -1,6 +1,23 @@
-import { Image, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 const messages = [
+  {
+    type: "user",
+    isImage: true,
+    imageLabel: "math_question.jpg",
+    caption: "Need help with this biology problem!",
+    imageContent: `Once the erythrocytes enter the blood in humans, it is estimated that they have an
+average lifetime of how many days. Is it:\n
+\na) 10 days
+\nb) 120 days
+\nc) 200 days
+\nd) 360 days`,
+  },
+  {
+    type: "bot",
+    content: `Answer: B\n\nExplanation: The average lifetime of erythrocytes (red blood cells) in humans is approximately 120 days. After this period, they are typically removed from circulation by the spleen and liver.`,
+    suggestions: [],
+  },
   {
     type: "user",
     isImage: true,
@@ -10,27 +27,8 @@ const messages = [
   },
   {
     type: "bot",
-    content:
-      "I'll help you solve this step by step:",
-    suggestions: [
-      "Answer: f'(x) = 6x + 2",
-      "Step 1: Apply the power rule to each term",
-      "Step 2: The derivative of 3x² is 6x (bring down the exponent and reduce by 1)",
-      "Step 3: The derivative of 2x is 2 (constant times x)",
-      "Step 4: The derivative of -5 is 0 (constants disappear)",
-    ],
-  },
-  {
-    type: "user",
-    content:
-      "Can you explain why the constant disappears?",
-  },
-  {
-    type: "bot",
-    content: "Great question! Here's why:",
-    suggestions: [
-      "Constants have a derivative of 0 because they don't change. The derivative measures rate of change, and since -5 is always -5 no matter what x is, its rate of change is zero.",
-    ],
+    content: `Answer: f'(x) = 6x + 2`,
+    suggestions: [],
   },
 ];
 
@@ -94,26 +92,30 @@ const ChatMockup = () => {
                             {message.imageContent}
                           </div>
                           {/* Overlay with file info */}
-                          <div className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm px-2 py-1.5">
+                          {/* <div className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm px-2 py-1.5">
                             <div className="flex items-center gap-1.5">
                               <Image className="w-3 h-3 text-white/80" />
                               <span className="text-xs font-mono text-white/80">
                                 {message.imageLabel}
                               </span>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                         {message.caption && (
                           <p className="text-sm">{message.caption}</p>
                         )}
                       </div>
                     ) : (
-                      <p className="text-sm">{message.content}</p>
+                      <p className="text-sm whitespace-pre-line">
+                        {message.content}
+                      </p>
                     )
                   ) : (
                     <>
                       <div className="bg-secondary rounded-2xl rounded-bl-md px-4 py-3">
-                        <p className="text-sm">{message.content}</p>
+                        <p className="text-sm whitespace-pre-line">
+                          {message.content}
+                        </p>
                       </div>
                       {message.suggestions && (
                         <div className="space-y-2 pl-2">

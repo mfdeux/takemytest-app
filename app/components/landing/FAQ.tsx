@@ -34,7 +34,7 @@ const faqs = [
   {
     question: "How do I upgrade?",
     answer:
-      "Start a chat with TakeMyTest on Telegram and use the /upgrade command. You'll be guided through a quick, secure payment process.",
+      "Start a chat with TakeMyTest on Telegram and use the /subscription command. You'll be guided through a quick, secure payment process.",
   },
 ];
 
