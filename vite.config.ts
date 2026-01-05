@@ -13,7 +13,7 @@ export default defineConfig({
       ".ngrok.io",
       ".massive.sh",
       ".run.app",
-      ".gettakemytest.com",
+      ".takemytest.app",
     ],
   },
 });

@@ -89,7 +89,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "TakeMyTest",
-              url: "https://gettakemytest.com",
+              url: "https://takemytest.app",
               description:
                 "Snap a photo of any test question. Get instant answers and detailed explanations—all through Telegram. Study smarter, not harder.",
             }),
