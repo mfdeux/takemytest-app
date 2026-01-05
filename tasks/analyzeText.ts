@@ -96,14 +96,14 @@ const task: Task = async (payload, helpers) => {
             type: "text",
             replyToId: originalMessage?.id as string,
             role: "assistant",
-            aiModel: "x-ai/grok-4-fast",
+            aiModel: "google/gemini-2.5-flash",
             aiAnalysis: analysis,
           },
         }),
         prisma.tokenUsage.create({
           data: {
             accountId: originalMessage?.accountId as string,
-            model: "x-ai/grok-4-fast",
+            model: "google/gemini-2.5-flash",
             inputTokens: usage.inputTokens,
             outputTokens: usage.outputTokens,
             totalTokens: usage.totalTokens,

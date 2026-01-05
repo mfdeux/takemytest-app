@@ -149,7 +149,7 @@ export async function analyzeTestQuestionImage({
   imageUrl: string;
 }) {
   const { output, usage } = await generateText({
-    model: openrouter.chat("x-ai/grok-4-fast"),
+    model: openrouter.chat("google/gemini-2.5-flash"),
     output: Output.object({
       schema: z.object({
         classification: z.enum(["question", "not_a_question"]),
@@ -207,7 +207,7 @@ export async function analyzeTestQuestionImage({
 
 export async function analyzeTestQuestionText({ text }: { text: string }) {
   const { output, usage } = await generateText({
-    model: openrouter.chat("x-ai/grok-4-fast"),
+    model: openrouter.chat("google/gemini-2.5-flash"),
     output: Output.object({
       schema: z.object({
         classification: z.enum(["question", "not_a_question"]),
@@ -267,8 +267,9 @@ export async function analyzeTestQuestionImage_Quick({
 }: {
   imageUrl: string;
 }) {
+  // "x-ai/grok-4-fast"
   const { output, usage } = await generateText({
-    model: openrouter.chat("x-ai/grok-4-fast"),
+    model: openrouter.chat("google/gemini-2.5-flash"),
     output: Output.object({
       schema: z.object({
         classification: z.enum(["question", "not_a_question"]),
