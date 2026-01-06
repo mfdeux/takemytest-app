@@ -3,7 +3,7 @@ const steps = [
     step: "01",
     title: "Sign up",
     description:
-      "Signup in seconds with a Google or Apple account and get 50 free credits.",
+      "Signup in seconds with a Google or Apple account and get 10 free credits.",
   },
   {
     step: "02",

@@ -264,8 +264,8 @@ export async function getOrCreateAccount({
         telegramUsername,
         telegramLanguageCode,
         telegramIsPremium,
-        messagesRemaining: 50,
-        messagesTotal: 50,
+        messagesRemaining: 10,
+        messagesTotal: 10,
       },
     });
     const customer = await stripe.customers.create({
@@ -358,8 +358,8 @@ export async function getOrCreateGoogleAccount({
         fullName: name,
         providerImageUrl: imageUrl,
         stripeCustomerId: customer.id,
-        messagesRemaining: 50,
-        messagesTotal: 50,
+        messagesRemaining: 10,
+        messagesTotal: 10,
       },
       select: {
         id: true,
@@ -404,8 +404,8 @@ export async function getOrCreateAppleAccount({
         fullName: name,
         providerImageUrl: imageUrl,
         stripeCustomerId: customer.id,
-        messagesRemaining: 50,
-        messagesTotal: 50,
+        messagesRemaining: 10,
+        messagesTotal: 10,
       },
       select: {
         id: true,
