@@ -11,6 +11,7 @@ import {
 
 import prisma from "~/lib/utils/prisma.server";
 import { deleteAccount } from "../services/accounts.server";
+import { analyzeTestQuestionImage_Quick } from "../services/ai.server";
 
 export const requiredAuthMiddleware = os
   .$context<{ account?: Account }>()
@@ -25,6 +26,22 @@ export const requiredAuthMiddleware = os
   });
 
 export const router = {
+  responses: {
+    generateSolution: os
+      .use(requiredAuthMiddleware)
+      .input(
+        z.object({
+          imageUrl: z.string(),
+        })
+      )
+      .handler(async ({ input, context }) => {
+        const { output: analysis, usage } =
+          await analyzeTestQuestionImage_Quick({
+            imageUrl: input.imageUrl,
+          });
+        return analysis;
+      }),
+  },
   billing: {
     getStripeSubscriptionSession: os
       .use(requiredAuthMiddleware)

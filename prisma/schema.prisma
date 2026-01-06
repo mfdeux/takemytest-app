@@ -18,13 +18,22 @@ model Account {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
-  telegramUserId       BigInt  @unique @map("telegram_user_id")
-  telegramFirstName    String? @map("telegram_first_name")
-  telegramLastName     String? @map("telegram_last_name")
-  telegramUsername     String? @map("telegram_username")
-  telegramLanguageCode String? @map("telegram_language_code")
-  telegramIsPremium    Boolean @map("telegram_is_premium")
-  defaultTone          String? @default("playful") @map("default_tone")
+  provider String @default("telegram")
+
+  emailAddress String? @unique @map("email_address")
+  fullName     String? @map("full_name")
+
+  providerPk       String? @map("provider_pk")
+  providerMetadata Json?   @map("provider_metadata")
+  providerImageUrl String? @map("provider_image_url")
+
+  telegramUserId       BigInt?  @unique @map("telegram_user_id")
+  telegramFirstName    String?  @map("telegram_first_name")
+  telegramLastName     String?  @map("telegram_last_name")
+  telegramUsername     String?  @map("telegram_username")
+  telegramLanguageCode String?  @map("telegram_language_code")
+  telegramIsPremium    Boolean? @map("telegram_is_premium")
+  defaultTone          String?  @default("playful") @map("default_tone")
 
   roles                   String[]     @default(["user"])
   stripeCustomerId        String?      @unique @map("stripe_customer_id")
