@@ -24,15 +24,15 @@ const Footer = ({ telegramLink }: FooterProps) => {
           <p className="text-muted-foreground mb-8 text-lg">
             Join thousands of students who study smarter with AI.
           </p>
-          <a href={telegramLink} target="_blank" rel="noopener noreferrer">
+          <Link to="/solve" rel="noopener noreferrer">
             <Button
               size="lg"
               className="h-12 px-8 text-base font-semibold bg-foreground text-background hover:bg-foreground/90 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
-              Start Free on Telegram
+              Start Free
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
 

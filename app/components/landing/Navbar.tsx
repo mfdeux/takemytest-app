@@ -1,5 +1,6 @@
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
 
 interface NavbarProps {
@@ -43,14 +44,14 @@ const Navbar = ({ telegramLink }: NavbarProps) => {
 
           {/* CTA */}
           <div className="hidden md:block">
-            <a href={telegramLink} target="_blank" rel="noopener noreferrer">
+            <Link to="/solve" rel="noopener noreferrer">
               <Button
                 size="sm"
                 className="h-8 px-4 text-sm font-medium bg-foreground text-background hover:bg-foreground/90"
               >
-                Open Bot
+                Start For Free
               </Button>
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -77,16 +78,11 @@ const Navbar = ({ telegramLink }: NavbarProps) => {
                   {link.label}
                 </a>
               ))}
-              <a
-                href={telegramLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2"
-              >
+              <Link to="/solve" rel="noopener noreferrer" className="mt-2">
                 <Button className="w-full bg-foreground text-background hover:bg-foreground/90">
-                  Open Bot
+                  Answer Your Question
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         )}

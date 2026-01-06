@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
 
 interface HeroProps {
@@ -33,7 +34,8 @@ const Hero = ({ telegramLink }: HeroProps) => {
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed opacity-0 animate-fade-up"
           style={{ animationDelay: "0.1s" }}
         >
-          Snap a photo of any test question. Get instant answers and detailed explanations—all through Telegram.
+          Snap a photo of any test question. Get instant answers and detailed
+          explanations.
         </p>
 
         {/* CTA Buttons */}
@@ -41,7 +43,7 @@ const Hero = ({ telegramLink }: HeroProps) => {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0 animate-fade-up"
           style={{ animationDelay: "0.2s" }}
         >
-          <a href={telegramLink} target="_blank" rel="noopener noreferrer">
+          <Link to="/solve" rel="noopener noreferrer">
             <Button
               size="lg"
               className="h-12 px-6 text-base font-semibold bg-white text-black hover:bg-white/90 transition-all hover:scale-[1.02] active:scale-[0.98]"
@@ -49,7 +51,7 @@ const Hero = ({ telegramLink }: HeroProps) => {
               Start for Free
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
-          </a>
+          </Link>
           <a href="#how-it-works">
             <Button
               variant="outline"
@@ -68,7 +70,9 @@ const Hero = ({ telegramLink }: HeroProps) => {
         >
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold">50K+</div>
-            <div className="text-sm text-muted-foreground">Questions Solved</div>
+            <div className="text-sm text-muted-foreground">
+              Questions Solved
+            </div>
           </div>
           <div className="w-px h-10 bg-border hidden md:block" />
           <div className="text-center">

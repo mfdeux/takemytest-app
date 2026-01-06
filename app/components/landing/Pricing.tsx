@@ -1,4 +1,5 @@
 import { Check, Sparkles } from "lucide-react";
+import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
 
 interface PricingProps {
@@ -106,12 +107,7 @@ const Pricing = ({ telegramLink }: PricingProps) => {
               </ul>
 
               {/* CTA */}
-              <a
-                href={telegramLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
+              <Link to="/solve" rel="noopener noreferrer" className="block">
                 <Button
                   variant={plan.highlighted ? "default" : "secondary"}
                   className={`w-full h-11 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] ${
@@ -122,7 +118,7 @@ const Pricing = ({ telegramLink }: PricingProps) => {
                 >
                   {plan.cta}
                 </Button>
-              </a>
+              </Link>
             </div>
           ))}
         </div>
