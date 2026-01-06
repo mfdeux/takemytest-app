@@ -18,7 +18,7 @@ import { Link, useRevalidator } from "react-router";
 import { toast } from "sonner";
 import Navbar from "~/components/app/Navbar";
 import { orpc } from "~/lib/orpc/orpc";
-import { maybeAccount } from "~/lib/services/accounts.server";
+import { requireAccount } from "~/lib/services/accounts.server";
 import type { Route } from "./+types/generate";
 
 // --- Types ---
@@ -62,10 +62,7 @@ async function convertFileToBase64(file: File): Promise<string> {
 
 // --- Loader ---
 export async function loader({ request }: Route.LoaderArgs) {
-  const account = await maybeAccount(request);
-  if (!account) {
-    throw new Response("Unauthorized", { status: 401 });
-  }
+  const account = await requireAccount(request);
   return { account };
 }
 
