@@ -1,4 +1,5 @@
 import axios from "axios";
+import "dotenv/config";
 import jsonwebtoken from "jsonwebtoken";
 import { stringify } from "node:querystring";
 import { redirect } from "react-router";
