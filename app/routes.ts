@@ -16,6 +16,6 @@ export default [
   route("/login/apple", "routes/login.apple.tsx"),
   route("/login/apple/callback/:state?", "routes/login.apple.callback.tsx"),
   route("/login", "routes/login.tsx"),
-  route("/generate", "routes/generate.tsx"),
+  route("/solve", "routes/generate.tsx"),
   route("/rpc/*", "./routes/rpc.$.ts"),
 ] satisfies RouteConfig;

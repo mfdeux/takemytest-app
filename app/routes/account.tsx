@@ -1,8 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { ArrowLeft, CreditCard, LogOut, User } from "lucide-react";
-import { Link, redirect, useRevalidator } from "react-router";
+import { CreditCard, LogOut, User } from "lucide-react";
+import { Link, redirect } from "react-router";
 import { toast } from "sonner";
+import Navbar from "~/components/app/Navbar";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -27,12 +28,12 @@ export async function loader({ request }: Route.LoaderArgs) {
     const searchParams = new URL(request.url).searchParams;
     const token = searchParams.get("token") || "";
     if (!token) {
-      throw new Response("Unauthorized", { status: 401 });
+      return redirect("/login");
     }
     // @ts-ignore
     account = await getAccountByOneTimeToken(token);
     if (!account) {
-      throw new Response("Unauthorized", { status: 401 });
+      return redirect("/login");
     }
     const authToken = createAuthenticationToken({ accountId: account.id });
     const expirationDate = new Date();
@@ -54,11 +55,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function Page({
   loaderData: { account },
 }: Route.ComponentProps) {
-  const revalidator = useRevalidator();
   const isPremium = account.subscriptionStatus === "active";
-  const updateMutation = useMutation(
-    orpc.account.updateAccount.mutationOptions()
-  );
   const deleteMutation = useMutation(orpc.deleteAccount.mutationOptions());
 
   async function handleDeleteAccount() {
@@ -70,16 +67,9 @@ export default function Page({
   return (
     <>
       <title>Account | TakeMyTest</title>
-      <div className="min-h-screen bg-background">
+      <Navbar />
+      <div className="pt-8 md:pt-8 min-h-screen bg-background">
         <div className="max-w-2xl mx-auto px-4 py-16">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </Link>
-
           <div className="flex items-center gap-4 mb-8">
             <div className="w-16 h-16 rounded-full gradient-brand flex items-center justify-center">
               <User className="w-8 h-8 text-white" />
