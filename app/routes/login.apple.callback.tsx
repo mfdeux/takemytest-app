@@ -8,12 +8,10 @@ import {
 import type { Route } from "./+types/login.google.callback";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  console.log("Received Apple login GET callback");
   return {};
 };
 
 export const action = async ({ request }: Route.LoaderArgs) => {
-  console.log("Received Apple login POST callback");
   const formData = await request.formData();
 
   // Apple sends these fields

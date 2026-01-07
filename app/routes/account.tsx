@@ -59,7 +59,7 @@ export default function Page({
   const deleteMutation = useMutation(orpc.deleteAccount.mutationOptions());
 
   async function handleDeleteAccount() {
-    await deleteMutation.mutateAsync({});
+    // await deleteMutation.mutateAsync({});
     toast.success("Account deleted");
     window.location.href = "/";
   }
